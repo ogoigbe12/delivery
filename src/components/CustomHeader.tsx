@@ -7,10 +7,13 @@ import {
   TouchableOpacity,
   TextInput,
 } from "react-native";
-import React from "react";
+import React, { useRef } from "react";
 import { Colors } from "../constants/Colors";
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
+// import BottomSheet from "./BottomSheet";
+import { BottomSheetModal } from "@gorhom/bottom-sheet";
+import BottomSheet from "./BottomSheet";
 
 const SearchBar = () => (
   <View style={styles.searchContainer}>
@@ -37,17 +40,23 @@ const SearchBar = () => (
 );
 
 const CustomHeader = () => {
+  const bottomSheetRef = useRef<BottomSheetModal>(null)
+  const openModel = () => {
+    bottomSheetRef.current?.present()
+  }
   return (
     <SafeAreaView style={styles.safeArea}>
+  
+      <BottomSheet ref={bottomSheetRef} />
       <View style={styles.container}>
-        <TouchableOpacity>
+        <TouchableOpacity onPress={openModel}>
           <Image
             style={styles.bike}
             source={require("../../assets/images/bike.png")}
           />
         </TouchableOpacity>
 
-        <TouchableOpacity style={styles.titleContainer}>
+        <TouchableOpacity style={styles.titleContainer} onPress={openModel}>
           <Text style={styles.textContainer}>Delivery . Now</Text>
           <View style={styles.locationName}>
             <Text style={styles.subTitle}>Ikeja</Text>
